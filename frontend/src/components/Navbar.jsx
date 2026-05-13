@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useCart } from "../src/CartContex.jsx";
+import { useCart } from "../CartContext";
 
 function Navbar() {
     const {cartItems} = useCart();
@@ -23,5 +23,4 @@ function Navbar() {
         </nav>
     )
 }
-
 export default Navbar;
