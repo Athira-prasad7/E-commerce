@@ -33,29 +33,10 @@ def get_cart(request):
     serializer = CartSerializer(cart)
     return Response(serializer.data)
 
-# @api_view(['POST'])
-# def add_to_cart(request):
-#     product_id = request.data.get('product_id')
-#     product = Product.objects.get(id=product_id)
-
-#     # Safer way to get the anonymous cart
-#     cart = Cart.objects.filter(user=request.user if request.user.is_authenticated else None).first()
-#     if not cart:
-#         cart = Cart.objects.create(user=request.user if request.user.is_authenticated else None)
-
-#     item, created = CartItem.objects.get_or_create(cart=cart, product=product)
-#     if not created:
-#         item.quantity += 1
-#         item.save()
-
-#     serializer = CartSerializer(cart)
-#     return Response({'message': 'Added', 'cart': serializer.data})
-
 @api_view(['POST'])
 def add_to_cart(request):
     product_id = request.data.get('product_id')
     product = Product.objects.get(id=product_id)
-
     cart, created = Cart.objects.get_or_create(user=None)
     item, created = CartItem.objects.get_or_create(cart=cart, product=product)
     if not created:
@@ -67,16 +48,13 @@ def add_to_cart(request):
 def update_cart_quantity(request):
     item_id = request.data.get('item_id')
     quantity = request.data.get('quantity')
-
     if not item_id or quantity is None:
         return Response({'error': 'Item ID and quantity are required'}, status=400)
-
     try:
         item = CartItem.objects.get(id=item_id)
         if int(quantity) < 1:
             item.delete()
             return Response({'error': 'Quantity must be at least 1'}, status=400)
-
         item.quantity = quantity
         item.save()
         serializer = CartItemSerializer(item)

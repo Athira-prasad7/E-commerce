@@ -14,26 +14,27 @@ export const CartProvider = ({ children }) => {
                 throw new Error("Failed to fetch cart");
             }
             const data = await res.json();
+            setCartItems(data);
             setCartItems(data.items || []);
             setTotal(data.total || 0);
         } catch (error) {
             console.error("Error fetching cart:", error);
         }
-    }
+    };
 
     useEffect(() => {
         fetchCart();
     }, []);
 
 
-    const addToCart = async (product) => {
+    const addToCart = async (productId) => {
         try {
             await fetch(`http://127.0.0.1:8000/cart/add/`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ product_id: productId }),
+                body: JSON.stringify({ product_id: productId}),
             });
             fetchCart();
         } catch (error) {

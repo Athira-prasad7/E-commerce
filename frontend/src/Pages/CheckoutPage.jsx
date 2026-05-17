@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import { useCart } from "../CartContext";
+import { useCart } from "../content/CartContext";
 import { useState } from "react";
 
-function CheckoutPage() {
+function checkoutPage() {
     const BASEURL = import.meta.env.VITE_BASE_URL;
     const navigate = useNavigate();
     const { clearCart } = useCart();
@@ -10,6 +10,7 @@ function CheckoutPage() {
     const [form, setForm] = useState({
         name:"",
         address:"",
+        phone:"",
         payment_method: "COD",
     });
 
@@ -22,13 +23,12 @@ function CheckoutPage() {
             [e.target.name]: e.target.value,
         });
     }
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
         setMessage("");
         try {
-            const res = await fetch('${BASEURL}/orders/create/',{
+            const res = await fetch(`http://127.0.0.1:8000/orders/create/`,{
                 method: "POST",
                 headers:{
                     "Content-Type": "application/json",
@@ -39,7 +39,7 @@ function CheckoutPage() {
 
             if (res.ok) {
                 setMessage("Order placed successfully!");
-                fetch('${BASEURL}/cart/')
+                fetch(`http://127.0.0.1:8000/cart/`)
                 clearCart();
                 setTimeout(() => {
                     navigate("/");
@@ -110,4 +110,4 @@ function CheckoutPage() {
     )
 }
 
-export default CheckoutPage
+export default checkoutPage;
