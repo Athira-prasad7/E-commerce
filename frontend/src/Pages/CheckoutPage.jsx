@@ -1,6 +1,8 @@
-import { useNavigate } from "react-router-dom";
-import { useCart } from "../content/CartContext";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { authFetch } from "../utils/auth";
+import { useCart } from "../content/CartContext";
+
 
 function checkoutPage() {
     const BASEURL = import.meta.env.VITE_BASE_URL;
@@ -28,7 +30,7 @@ function checkoutPage() {
         setLoading(true);
         setMessage("");
         try {
-            const res = await fetch(`http://127.0.0.1:8000/orders/create/`,{
+            const res = await authFetch(`http://127.0.0.1:8000/orders/create/`,{
                 method: "POST",
                 headers:{
                     "Content-Type": "application/json",
@@ -39,7 +41,7 @@ function checkoutPage() {
 
             if (res.ok) {
                 setMessage("Order placed successfully!");
-                fetch(`http://127.0.0.1:8000/cart/`)
+                authFetch(`http://127.0.0.1:8000/cart/`)
                 clearCart();
                 setTimeout(() => {
                     navigate("/");
