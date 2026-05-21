@@ -107,8 +107,8 @@ def create_order(request):
                 price=item.product.price
             )
 
-            cart.items.all().delete()
-            return Response({'message': 'Order created successfully', 'order_id': order.id})
+        cart.items.all().delete()
+        return Response({'message': 'Order created successfully', 'order_id': order.id})
     except Exception as e:
         return Response({'error': str(e)}, status=500)
 
