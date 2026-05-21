@@ -14,7 +14,7 @@ function ProductDetails() {
         fetch(`http://127.0.0.1:8000/products/${id}/`)
             .then((response) => {
                 if (!response.ok) {
-                    throw new Error("Faile to fetch product details");
+                    throw new Error("Failed to fetch product details");
                 }
                 return response.json();
             })
@@ -51,7 +51,7 @@ function ProductDetails() {
             <div className="bg-white rounded-xl shadow-md p-6 max-w-3xl w-full">
                 <div className="flex flex-col md:flex-row gap-8">
                     <img
-                        src={`${product.image}`}
+                        src={product.image}
                         alt={product.name}
                         className="w-full md:w-1/2 h-auto object-cover rounded-lg"
                     />
