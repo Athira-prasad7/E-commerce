@@ -11,7 +11,7 @@ function ProductDetails() {
     const { addToCart } = useCart();
 
     useEffect(() => {
-        fetch(`http://127.0.0.1:8000/products/${id}/`)
+        fetch(`${BASEURL}/products/${id}/`)
             .then((response) => {
                 if (!response.ok) {
                     throw new Error("Failed to fetch product details");

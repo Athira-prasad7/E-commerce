@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard.jsx";
+// import Banner from "../components/Banner.jsx";
 import { data } from "react-router-dom";
 
 function ProductList() {
@@ -7,10 +8,10 @@ function ProductList() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    const BASEURL=import.meta.env.VITE_DJANGO_BASE_URL;
+    const BASEURL = import.meta.env.VITE_DJANGO_BASE_URL;
 
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/products/')
+        fetch(`${BASEURL}/products/`)
             .then((response) => {
                 if (!response.ok) {
                     throw new Error("Failed to fetch products");
@@ -47,6 +48,7 @@ function ProductList() {
                 )}
             </div>
         </div>
+
     )
 }
 

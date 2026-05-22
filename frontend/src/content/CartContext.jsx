@@ -2,6 +2,8 @@ import { createContext, useContext, useState, useEffect, createRef } from "react
 import { authFetch, getAccessToken } from "../utils/auth";
 
 const CartContext = createContext();
+const BASEURL = import.meta.env.VITE_DJANGO_BASE_URL;
+
 
 export const CartProvider = ({ children }) => {
     const [cartItems, setCartItems] = useState([]);
@@ -10,7 +12,7 @@ export const CartProvider = ({ children }) => {
 
     const fetchCart = async () => {
         try {
-            const res = await authFetch(`http://127.0.0.1:8000/cart/`)
+            const res = await authFetch(`${BASEURL}/cart/`)
             const data = await res.json();
             setCartItems(data.items || []);
             setTotal(data.total || 0);
@@ -25,7 +27,7 @@ export const CartProvider = ({ children }) => {
 
      const addToCart = async (productId) => {
         try{
-            await authFetch(`http://127.0.0.1:8000/cart/add/`, {
+            await authFetch(`${BASEURL}/cart/add/`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -40,7 +42,7 @@ export const CartProvider = ({ children }) => {
 
     const removeFromCart = async (itemId) => {
         try {
-            await authFetch('http://127.0.0.1:8000/cart/remove/', {
+            await authFetch(`${BASEURL}/cart/remove/`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -59,7 +61,7 @@ export const CartProvider = ({ children }) => {
             return;
         }
         try {
-            await authFetch('http://127.0.0.1:8000/cart/update/', {
+            await authFetch(`${BASEURL}/cart/update/`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

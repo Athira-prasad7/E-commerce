@@ -10,9 +10,9 @@ function checkoutPage() {
     const { clearCart } = useCart();
 
     const [form, setForm] = useState({
-        name:"",
-        address:"",
-        phone:"",
+        name: "",
+        address: "",
+        phone: "",
         payment_method: "COD",
     });
 
@@ -30,9 +30,9 @@ function checkoutPage() {
         setLoading(true);
         setMessage("");
         try {
-            const res = await authFetch(`http://127.0.0.1:8000/orders/create/`,{
+            const res = await authFetch(`${BASEURL}/orders/create/`, {
                 method: "POST",
-                headers:{
+                headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify(form),
@@ -41,13 +41,13 @@ function checkoutPage() {
 
             if (res.ok) {
                 setMessage("Order placed successfully!");
-                authFetch(`http://127.0.0.1:8000/cart/`)
+                authFetch(`${BASEURL}/cart/`)
                 clearCart();
                 setTimeout(() => {
                     navigate("/");
                 }, 2000);
             } else {
-                setMessage(data.error ||"Failed to place order. Please try again.");
+                setMessage(data.error || "Failed to place order. Please try again.");
             }
         } catch (error) {
             setMessage("An error occurred. Please try again.");
@@ -56,7 +56,7 @@ function checkoutPage() {
         }
     }
 
-    return(
+    return (
         <div className="min-h-screen bg-gray-100 flex justify-center items-center p-6">
             <div className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md">
                 <h1 className="text-3xl font-bold text-center mb-6">Checkout</h1>
@@ -70,8 +70,8 @@ function checkoutPage() {
                         required
                         className="w-full border rounded-lg p-2"
                     />
-                    <textarea 
-                        name="address" 
+                    <textarea
+                        name="address"
                         placeholder="Full Address"
                         value={form.address}
                         onChange={handleChange}
@@ -100,8 +100,8 @@ function checkoutPage() {
                         type="submit"
                         disabled={loading}
                         className="w-full bg-blue-500 text-white py-2 rounded-b-lg hover:bg-blue-600 transition duration-300">
-                            
-                            {loading ? "Processing..." : "place Order"}
+
+                        {loading ? "Processing..." : "place Order"}
                     </button>
                     {message && (
                         <p className="{'text-center text-green-700 font-semibold mt-4">{message}</p>

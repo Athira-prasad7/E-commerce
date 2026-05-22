@@ -25,7 +25,7 @@ function CartPage() {
                             <div className="flex items-center gap-4">
                                 {item.product_image && (
                                     <img 
-                                        src={'http://127.0.0.1:8000/${item.product_image}'}
+                                        src={`${BASEURL}${item.product_image}`}
                                         alt={item.product_name}
                                         className="w-20 h-20 object-cover rounded"
                                     />
