@@ -45,10 +45,9 @@ function ProductDetails() {
         }
         addToCart(product.id);
     }
-
-    return (
-        <div className="min-h-screen bg-gray-100 flex justify-center items-center py-10">
-            <div className="bg-white rounded-xl shadow-md p-6 max-w-3xl w-full">
+        return (
+        <div className="min-h-screen bg-gray-100 flex py-6 pl-50 item-center justify-center">
+            <div className="p-7 max-w-3xl w-full">
                 <div className="flex flex-col md:flex-row gap-8">
                     <img
                         src={product.image}
