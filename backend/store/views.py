@@ -21,8 +21,7 @@ def get_Product_detail(request, pk):
         return Response(serializer.data)
     except Product.DoesNotExist:
         return Response({'error': 'product not found'}, status=404)
-
-
+    
 @api_view(['GET'])
 def get_categories(request):
     categories = Category.objects.all()

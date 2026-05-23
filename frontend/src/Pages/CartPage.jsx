@@ -24,7 +24,7 @@ function CartPage() {
                         >
                             <div className="flex items-center gap-4">
                                 {item.product_image && (
-                                    <img 
+                                    <img
                                         src={`${BASEURL}${item.product_image}`}
                                         alt={item.product_name}
                                         className="w-20 h-20 object-cover rounded"
@@ -61,11 +61,11 @@ function CartPage() {
                         <p className="text-xl font-semibold">${total.toFixed(2)}</p>
                         <Link to="/checkout" className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition duration-300">
                             Processed to Checkout
-                        </Link>                    
+                        </Link>
                     </div>
                 </div>
             )}
         </div>
-    )
+    );
 }
 export default CartPage;
