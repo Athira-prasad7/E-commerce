@@ -23,6 +23,34 @@ def get_Product_detail(request, pk):
         return Response({'error': 'product not found'}, status=404)
     
 @api_view(['GET'])
+def get_related_products(request, pk):
+    try:
+        # 1. Get the current product
+        current_product = Product.objects.get(pk=pk)
+        
+        # 2. Fetch products in the same category, excluding the current one
+        related_products = Product.objects.filter(
+            category=current_product.category
+        ).exclude(id=current_product.id)[:4]  # Limit to 4 items
+        
+        # 3. Fallback: If not enough related products, fetch top generic products
+        if related_products.count() < 4:
+            needed = 4 - related_products.count()
+            extra_products = Product.objects.exclude(
+                id=current_product.id
+            ).exclude(
+                id__in=[p.id for p in related_products]
+            )[:needed]
+            related_products = list(related_products) + list(extra_products)
+
+        serializer = ProductSerializer(related_products, many=True, context={'request': request})
+        return Response(serializer.data)
+        
+    except Product.DoesNotExist:
+        return Response({'message': 'Product not found'}, status=404)
+
+
+@api_view(['GET'])
 def get_categories(request):
     categories = Category.objects.all()
     serializer = categorySerializer(categories, many=True)

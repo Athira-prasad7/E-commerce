@@ -46,7 +46,7 @@ function ProductDetails() {
         addToCart(product.id);
     }
     // className="bg-blue-600 text-white px-4 py-2  rounded-lg hover:bg-blue-700 transition"
-        return (
+    return (
         <div className="min-h-screen bg-gray-100 flex py-40 pl-50">
             <div className="max-w-3xl w-full">
                 <div className="flex flex-col md:flex-row gap-8">
